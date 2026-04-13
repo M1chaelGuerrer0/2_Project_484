@@ -7,6 +7,7 @@ $(function() { // Makes sure that your function is called once all the DOM eleme
     $('.treat-button').click(clickedTreatButton);
     $('.play-button').click(clickedPlayButton);
     $('.exercise-button').click(clickedExerciseButton);
+    $('.pet-button').click(clickedPetButton);
   
 
   
@@ -14,23 +15,45 @@ $(function() { // Makes sure that your function is called once all the DOM eleme
   })
   
     // Add a variable "pet_info" equal to a object with the name (string), weight (number), and happiness (number) of your pet
-    var pet_info = {name:"My Pet Name", weight:"??", happiness:"??"};
+    var pet_info = {
+      name:"Mothra", 
+      weight:0, 
+      happiness:0
+    };
   
     function clickedTreatButton() {
-      // Increase pet happiness
-      // Increase pet weight
+      pet_info.happiness += 10;
+      pet_info.weight += 5;
+
+      updateMessage("You gave " + pet_info.name + " a treat! Yummy!");
+
       checkAndUpdatePetInfoInHtml();
     }
     
     function clickedPlayButton() {
-      // Increase pet happiness
-      // Decrease pet weight
+      pet_info.happiness += 5;
+      pet_info.weight -= 3;
+
+      updateMessage("You played with " + pet_info.name + "! Fun!");
+
       checkAndUpdatePetInfoInHtml();
     }
     
     function clickedExerciseButton() {
-      // Decrease pet happiness
-      // Decrease pet weight
+      pet_info.happiness -= 5;
+      pet_info.weight -= 6;
+
+      updateMessage("You exercised " + pet_info.name + "! Sweaty!");
+
+      checkAndUpdatePetInfoInHtml();
+    }
+
+    function clickedPetButton() {
+      pet_info.happiness += 1;
+      pet_info.weight += 0.5; // lazy weight added
+
+      updateMessage("You pet " + pet_info.name + "! So cute!");
+
       checkAndUpdatePetInfoInHtml();
     }
   
@@ -41,6 +64,29 @@ $(function() { // Makes sure that your function is called once all the DOM eleme
     
     function checkWeightAndHappinessBeforeUpdating() {
       // Add conditional so if weight is lower than zero.
+      if (pet_info.weight < 0) {
+        pet_info.weight = 0;
+      }
+      // Add conditional so if happiness is lower than zero.
+      if (pet_info.happiness < 0) {
+        pet_info.happiness = 0;
+      }
+    }
+
+    // takes messages (string) and adds it to the message container in HTML
+    function updateMessage(message) {
+      const container = $('.message-container');
+      
+      // add new message to container
+      container.append("<p>" + message + "</p>");
+    
+      // remove old messages if there are more than 10
+      if (container.find('p').length > 10) {
+        container.find('p').first().remove();
+      }
+
+      // auto-scroll to newest message
+      container.scrollTop(container[0].scrollHeight);
     }
     
     // Updates your HTML with the current values in your pet_info object
