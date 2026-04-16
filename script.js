@@ -133,7 +133,6 @@ $(function() { // Makes sure that your function is called once all the DOM eleme
 
     function clickedDrinkButton() {
       pet_info.thirst += 20;
-      pet_info.weight += 1;
       pet_info.happiness += 2 * applyWeightEffects();
       drinkSound.play();
       
